@@ -1,0 +1,1 @@
+ACTION=="add", SUBSYSTEM=="usb", ATTRS{bInterfaceClass}=="03", ATTR{bInterfaceProtocol}=="01" RUN+="/usr/sbin/insmod /lib/modules/6.1.52-lweglarz/kernel/keyboard_load.ko"
