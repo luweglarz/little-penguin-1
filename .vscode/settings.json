@@ -1,0 +1,7 @@
+{
+	"files.associations": {
+		"fortytwo_test_framework.h": "c",
+		"slab.h": "c"
+	},
+	"C_Cpp.default.compilerPath": "/usr/bin/gcc"
+}

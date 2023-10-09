@@ -1,29 +1,34 @@
-#include "fortytwo_misc.h"
+#include "fortytwo_test_framework.h"
 
-// Define a test function.
-static void test_your_module(void) {
-    // Test case 1: Check if a function returns the expected result.
-    int result = your_module_function(42);
-    if (result != 84) {
-        pr_err("Test case 1 failed: Expected 84, got %d\n", result);
+/*
+*   A simple test framework for my misc device driver 
+*   in order to get better at unit testing in c
+*/
+
+BEGIN_TESTING
+
+TEST_CASE("read_test"){
+    int fd;
+    char buffer[256];
+
+    fd = open(PATH_TO_DEVICE, O_RDWR);
+
+    if (fd == -1){
+        perror("Cannot open the file");
+        return (1);
     }
 
-    // Test case 2: Check another aspect of your module's functionality.
-    // ...
+    ssize_t bytes_read = read(fd, buffer, sizeof(buffer));
+    if (bytes_read < 0){
+        perror("Failed to read the file");
+        close(fd);
+        return (1);
+    }
+    printf("bytes_read: %lu\n", bytes_read);
+    printf("buffer: %s\n", buffer);
 
-    // Add more test cases as needed.
+    close(fd);
+    assert(1 == 1);
 }
 
-static int __init test_module_init(void) {
-    pr_info("Running test cases for your module\n");
-    test_your_module();
-    return 0;
-}
-
-static void __exit test_module_exit(void) {
-    pr_info("Test cases completed\n");
-}
-
-module_init(test_module_init);
-module_exit(test_module_exit);
-MODULE_LICENSE("GPL");
+END_TESTING

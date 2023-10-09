@@ -1,0 +1,32 @@
+{
+    "configurations": [
+        {
+            "name": "driver",
+            "defines": [
+                "__KERNEL__",
+                "MODULE"
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "gcc-x64",
+            "includePath": [
+                "/usr/include/linux",
+                "/usr/src/linux-6.1.52/arch/x86/include",
+                "/usr/src/linux-6.1.52/arch/x86/include/generated",
+                "/usr/src/linux-6.1.52/include",
+                "/usr/src/linux-6.1.52/arch/x86/include/uapi",
+                "/usr/src/linux-6.1.52/arch/x86/include/generated/uapi",
+                "/usr/src/linux-6.1.52/include/uapi",
+                "/usr/src/linux-6.1.52/include/generated/uapi"
+            ],
+            "compilerArgs": [
+                "-nostdinc",
+                "-include",
+                "/usr/src/linux-6.1.52/include/linux/kconfig.h",
+                "-include",
+                "/usr/src/linux-6.1.52/include/linux/compiler_types.h"
+            ]
+        }
+    ],
+    "version": 4
+}
