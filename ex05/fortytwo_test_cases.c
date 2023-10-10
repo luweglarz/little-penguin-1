@@ -31,4 +31,48 @@ TEST_CASE("read_test"){
     assert(1 == 1);
 }
 
+TEST_CASE("write_test"){
+    int fd;
+    const char *login = "lweglarz";
+
+    fd = open(PATH_TO_DEVICE, O_RDWR);
+    if (fd == -1){
+        perror("Cannot open the file");
+        return (1);
+    }
+
+    ssize_t bytes_write = write(fd, login, sizeof(login));
+    if (bytes_write < 0){
+        perror("Failed to write into the file");
+        close(fd);
+        return (1);
+    }
+    printf("bytes_write: %lu\n", bytes_write);
+
+    close(fd);
+    assert(1 == 1);
+}
+
+TEST_CASE("write_fail_test"){
+    int fd;
+    const char *login = "lweglaz";
+
+    fd = open(PATH_TO_DEVICE, O_RDWR);
+    if (fd == -1){
+        perror("Cannot open the file");
+        return (1);
+    }
+
+    ssize_t bytes_write = write(fd, login, sizeof(login));
+    if (bytes_write < 0){
+        perror("Failed to write into the file");
+        close(fd);
+        return (1);
+    }
+    printf("bytes_write: %lu\n", bytes_write);
+
+    close(fd);
+    assert(1 == 1);
+}
+
 END_TESTING
