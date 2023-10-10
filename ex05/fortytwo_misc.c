@@ -43,8 +43,6 @@ static ssize_t my_misc_write(struct file *filep, const char __user *user_buf, si
     if (copy_from_user(buffer, user_buf, count))
         return (-EFAULT);
 
-    printk(KERN_INFO "Misc wrote: %s\n", buffer);
-    printk(KERN_INFO "DIff misc: %d\n", strncmp(buffer, user_buf, LOGIN_SIZE));
     if (strncmp(buffer, LOGIN, LOGIN_SIZE) != 0)
         return (-EINVAL);
 
