@@ -16,7 +16,7 @@ install: all
 	-/sbin/insmod $(MODULE_LOCATION)
 
 test: $(MODULE_LOCATION)
-	gcc fortytwo_test_cases.c -o $(TEST_BINARY)
+	gcc fortytest.c -o $(TEST_BINARY)
 
 clean:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean

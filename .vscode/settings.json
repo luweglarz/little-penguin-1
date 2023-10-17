@@ -3,7 +3,8 @@
 		"fortytwo_test_framework.h": "c",
 		"slab.h": "c",
 		"module.h": "c",
-		"debugfs_subdir.h": "c"
+		"debugfs_subdir.h": "c",
+		"debugfs_test.h": "c"
 	},
 	"C_Cpp.default.compilerPath": "/usr/bin/gcc",
 	"C_Cpp.errorSquiggles": "disabled"

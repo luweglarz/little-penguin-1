@@ -1,4 +1,4 @@
-#include "fortytwo_test_framework.h"
+#include "fortytest.h"
 
 /*
 *   A simple test framework for my misc device driver 
@@ -9,7 +9,7 @@ BEGIN_TESTING
 
 TEST_CASE("read_test"){
     int fd;
-    char buffer[256];
+    char buffer[8];
 
     fd = open(PATH_TO_DEVICE, O_RDWR);
 
@@ -18,7 +18,7 @@ TEST_CASE("read_test"){
         return (1);
     }
 
-    ssize_t bytes_read = read(fd, buffer, sizeof(buffer));
+    ssize_t bytes_read = read(fd, buffer, 8);
     if (bytes_read < 0){
         perror("Failed to read the file");
         close(fd);
@@ -41,7 +41,7 @@ TEST_CASE("write_test"){
         return (1);
     }
 
-    ssize_t bytes_write = write(fd, login, sizeof(login));
+    ssize_t bytes_write = write(fd, login, 8);
     if (bytes_write < 0){
         perror("Failed to write into the file");
         close(fd);

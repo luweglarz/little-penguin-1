@@ -15,17 +15,16 @@
 */
 static ssize_t my_misc_read(struct file *filep, char __user *user_buf, size_t count, loff_t *f_pos) {
 	const char *login = LOGIN;
+    ssize_t     ret = 0;
 	/*
         Check that count isn't larger than login size to not overflow
         example: if 256 is sent to read as count argument since 8 < 256 copy_to_user will overflow
     */
-    if (count > (LOGIN_SIZE - *f_pos)){
-        count = LOGIN_SIZE - *f_pos;
+    if (count > LOGIN_SIZE){
+        count = LOGIN_SIZE;
     }
-	if(copy_to_user(user_buf, login, count)) {
-        return (-EFAULT);
-    }
-	return (count);
+	ret = copy_to_user(user_buf, login, count);
+	return (count - ret);
 }
 
 /*
@@ -36,17 +35,17 @@ static ssize_t my_misc_read(struct file *filep, char __user *user_buf, size_t co
 */
 static ssize_t my_misc_write(struct file *filep, const char __user *user_buf, size_t count, loff_t *ppos) {
     static char buffer[LOGIN_SIZE];
+    ssize_t     ret = 0;
 
-    if (count != sizeof(buffer))
+    if (count != LOGIN_SIZE)
         return (-EINVAL);
 
-    if (copy_from_user(buffer, user_buf, count))
-        return (-EFAULT);
+    ret = copy_from_user(buffer, user_buf, count);
 
     if (strncmp(buffer, LOGIN, LOGIN_SIZE) != 0)
         return (-EINVAL);
 
-    return (count);
+    return (count - ret);
 }
 
 static const struct file_operations my_misc_fops = {
