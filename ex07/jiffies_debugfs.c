@@ -3,39 +3,32 @@
 #include <linux/fs.h>
 #include <linux/miscdevice.h>
 #include <linux/uaccess.h>
+#include <linux/debugfs.h>
+#include <linux/jiffies.h>
 
-// static const struct file_operations jiffies_fops = {
-//     .read = jiffies_fop_read,
-//     .write = jiffies_fop_write,
-// };
+# define FILE_NAME "jiffies"
+struct dentry *jiffies_debugfs_file;
 
-// static ssize_t jiffies_fop_read(struct file *filep, char __user *user_buf, size_t count, loff_t *f_pos) {
-// 	const char *login = LOGIN;
+static ssize_t jiffies_fop_read(struct file *filep, char __user *user_buf, size_t count, loff_t *f_pos) {
+	ssize_t ret = 0;
+	char buffer[10];
 
-//     if (count > (LOGIN_SIZE - *f_pos)){
-//         count = LOGIN_SIZE - *f_pos;
-//     }
-// 	if(copy_to_user(user_buf, login, count)) {
-//         return (-EFAULT);
-//     }
-// 	return (count);
-// }
-
-// static ssize_t jiffies_fop_write(struct file *filep, const char __user *user_buf, size_t count, loff_t *ppos) {
-//     static char buffer[LOGIN_SIZE];
-
-//     if (count != sizeof(buffer))
-//         return (-EINVAL);
-
-//     if (copy_from_user(buffer, user_buf, count))
-//         return (-EFAULT);
-
-//     if (strncmp(buffer, LOGIN, LOGIN_SIZE) != 0)
-//         return (-EINVAL);
-
-//     return (count);
-// }
-
-void create_jiffies_debugfs(void){
-    
+	sprintf(buffer, "%ld", jiffies);
+	ret = copy_to_user(user_buf, buffer, sizeof(buffer));
+	return (count - ret);
 }
+
+static const struct file_operations jiffies_fops = {
+    .read = jiffies_fop_read,
+};
+
+int create_jiffies_debugfs(struct dentry *parent){
+	jiffies_debugfs_file = debugfs_create_file(FILE_NAME, 0007, parent, NULL, &jiffies_fops);
+	if (!jiffies_debugfs_file){
+		printk(KERN_ERR "Failed to create debugfs jiffies file.\n");
+       	return -1;
+    }
+	return 0;
+}
+
+MODULE_LICENSE("GPL");
