@@ -1,4 +1,5 @@
 {
+	"editor.tabSize": 8,
 	"files.associations": {
 		"fortytwo_test_framework.h": "c",
 		"slab.h": "c",
