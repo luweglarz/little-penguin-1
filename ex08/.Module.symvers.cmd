@@ -1,1 +1,0 @@
-cmd_/root/little-penguin-1/ex08/Module.symvers :=  sed 's/ko$$/o/'  /root/little-penguin-1/ex08/modules.order | scripts/mod/modpost      -o /root/little-penguin-1/ex08/Module.symvers -e -i Module.symvers -T - 
