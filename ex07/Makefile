@@ -16,7 +16,7 @@ install: all
 	-/sbin/insmod $(MODULE_LOCATION)
 
 test: $(MODULE_LOCATION)
-	gcc debugfs_test.c -o $(TEST_BINARY)
+	clang -fsanitize=thread -g -O1 debugfs_test.c -o $(TEST_BINARY)
 
 clean:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean

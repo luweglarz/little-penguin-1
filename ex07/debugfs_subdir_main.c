@@ -19,7 +19,6 @@ static int __init debugfs_subdir_init(void) {
         return (-ENOMEM);
     if (create_jiffies_debugfs(my_debugfs_dir) != 0)
         return (-ENOMEM);
-    (void)id_debugfs_file;
     return 0;
 }
 

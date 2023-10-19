@@ -18,9 +18,9 @@ struct dentry *foo_debugfs_file;
 static ssize_t foo_fop_read(struct file *filep, char __user *user_buf, size_t count, loff_t *f_pos) {
 	ssize_t ret = 0;
 
-    if (count > PAGE_SIZE){
-        count = PAGE_SIZE;
-    }
+    	if (count > PAGE_SIZE){
+		count = PAGE_SIZE;
+    	}
 	mutex_lock(&debugfs_mutex);
 	ret = copy_to_user(user_buf, page, count);
 	mutex_unlock(&debugfs_mutex);
@@ -44,7 +44,7 @@ static const struct file_operations foo_fops = {
 };
 
 int create_foo_debugfs(struct dentry *parent){
-	foo_debugfs_file = debugfs_create_file(FILE_NAME, 0000, parent, NULL, &foo_fops);
+	foo_debugfs_file = debugfs_create_file(FILE_NAME, 644, parent, NULL, &foo_fops);
 	if (!foo_debugfs_file){
 		printk(KERN_ERR "Failed to create debugfs foo file.\n");
        	return -1;

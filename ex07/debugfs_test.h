@@ -19,6 +19,7 @@
 int run_test(const char *test_name, int ac, char **av){
 	if (ac == 1){ return 1; }
 	for (int i = 1; i < ac; i++){ if (strcmp(test_name, av[i])){ return 0;}}
+	return (0);
 }
 
 
