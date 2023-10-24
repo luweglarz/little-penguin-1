@@ -1,11 +1,13 @@
 {
 	"editor.tabSize": 8,
 	"files.associations": {
-		"fortytwo_test_framework.h": "c",
-		"slab.h": "c",
-		"module.h": "c",
-		"debugfs_subdir.h": "c",
-		"debugfs_test.h": "c"
+		"current.h": "c",
+		"mount.h": "c",
+		"sched.h": "c",
+		"nsproxy.h": "c",
+		"fs_struct.h": "c",
+		"fs.h": "c",
+		"proc_fs.h": "c"
 	},
 	"C_Cpp.default.compilerPath": "/usr/bin/gcc",
 	"C_Cpp.errorSquiggles": "disabled"

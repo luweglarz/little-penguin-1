@@ -1,17 +1,30 @@
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/fs.h>
-#include <linux/miscdevice.h>
-#include <linux/uaccess.h>
 #include <linux/proc_fs.h>
-#include <asm/uaccess.h>
+#include <linux/nsproxy.h>
+#include <linux/mount.h>
+#include <linux/sched.h>
+#include <linux/fs_struct.h>
+#include <../fs/mount.h>
 
 static struct proc_dir_entry *proc_entry;
 
 static ssize_t proc_read(struct file *filep, char __user *user_buf, size_t count, loff_t *f_pos) {
-	struct dentry *curdentry;
-        (void)curdentry;
-        return (0);
+	struct mount *mnt;
+	char buffer[256];
+	ssize_t ret = 0;
+
+	memset(buffer, '\0', sizeof(buffer));
+	list_for_each_entry(mnt, &current->nsproxy->mnt_ns->list, mnt_list) {
+		printk(KERN_INFO "mnt %s\n", mnt->mnt_devname); 
+		pr_info("%s\n", mnt->mnt_devname);
+	}
+	// struct super_block *sb;
+	// list_for_each_entry(sb, &current->nsproxy->mnt_ns->list, s_list) {
+	// 	printk(KERN_INFO "mnt %s\n", mnt->s_id); 
+	// }
+	return (ret - count);
 }
 
 static struct proc_ops myops = 
