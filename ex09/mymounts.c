@@ -10,26 +10,23 @@
 
 static struct proc_dir_entry *proc_entry;
 
-static ssize_t proc_read(struct file *filep, char __user *user_buf, size_t count, loff_t *f_pos) {
-	struct mount *mnt;
-	char buffer[256];
-	ssize_t ret = 0;
+static int my_mount_proc_show(struct seq_file *m, void *v) {
+    struct mount *mnt;
 
-	memset(buffer, '\0', sizeof(buffer));
-	list_for_each_entry(mnt, &current->nsproxy->mnt_ns->list, mnt_list) {
-		printk(KERN_INFO "mnt %s\n", mnt->mnt_devname); 
-		pr_info("%s\n", mnt->mnt_devname);
-	}
-	// struct super_block *sb;
-	// list_for_each_entry(sb, &current->nsproxy->mnt_ns->list, s_list) {
-	// 	printk(KERN_INFO "mnt %s\n", mnt->s_id); 
-	// }
-	return (ret - count);
+    list_for_each_entry(mnt, &current->nsproxy->mnt_ns->list, mnt_list) {
+	seq_printf(m, "%s\n", mnt->mnt_devname);
+    }
+    return 0;
+}
+
+static int my_mount_proc_open(struct inode *inode, struct file *file) {
+    return single_open(file, my_mount_proc_show, NULL);
 }
 
 static struct proc_ops myops = 
 {
-	.proc_read = proc_read,
+	.proc_open = my_mount_proc_open,
+	.proc_read = seq_read,
 };
 
 
