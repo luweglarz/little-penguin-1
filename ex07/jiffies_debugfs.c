@@ -11,11 +11,11 @@ struct dentry *jiffies_debugfs_file;
 
 static ssize_t jiffies_fop_read(struct file *filep, char __user *user_buf, size_t count, loff_t *f_pos) {
 	ssize_t ret = 0;
-	char buffer[10];
+	char buffer[20];
 
 	sprintf(buffer, "%ld", jiffies);
-	ret = copy_to_user(user_buf, buffer, sizeof(buffer));
-	return (count - ret);
+	ret = simple_read_from_buffer(user_buf, count, f_pos, buffer, sizeof(buffer));
+	return (ret);
 }
 
 static const struct file_operations jiffies_fops = {

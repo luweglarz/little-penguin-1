@@ -46,13 +46,15 @@ ssize_t myfd_read(struct file *fp, char __user *user, size_t size,
 	loff_t *offs)
 {
 	size_t t, i;
-	char *tmp2;
 	/***************
 	 * Malloc like a boss
 	 ***************/
-	tmp2 = kmalloc(sizeof(char) * PAGE_SIZE * 2, GFP_KERNEL);
-	tmp = tmp2;
-	for (t = strlen(str) - 1, i = 0; t >= 0; t--, i++)
+	if (!tmp) {
+		tmp = kmalloc(sizeof(char) * PAGE_SIZE * 2, GFP_KERNEL);
+		if (!tmp)
+			return (-EINVAL);
+	}
+	for (t = strlen(str) - 1, i = 0; i != strlen(str); t--, i++)
 		tmp[i] = str[t];
 	tmp[i] = 0x0;
 	return simple_read_from_buffer(user, size, offs, tmp, i);

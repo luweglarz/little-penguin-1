@@ -1,0 +1,26 @@
+From e750af16159a8d7478c2e5353b26cd5738dfdb80 Mon Sep 17 00:00:00 2001
+From: lweglarz <lweglarz@student.42.fr>
+Date: Fri, 3 Nov 2023 19:09:25 +0100
+Subject: [PATCH] modify Makefile
+
+Signed-off-by: lweglarz <lweglarz@student.42.fr>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index a1e931ff7eb0..939ca578f603 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2,7 +2,7 @@
+ VERSION = 6
+ PATCHLEVEL = 6
+ SUBLEVEL = 0
+-EXTRAVERSION =
++EXTRAVERSION = -thor_kernel
+ NAME = Hurr durr I'ma ninja sloth
+ 
+ # *DOCUMENTATION*
+-- 
+2.39.2
+

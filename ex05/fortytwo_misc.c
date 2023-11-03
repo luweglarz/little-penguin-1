@@ -7,45 +7,30 @@
 # define LOGIN "lweglarz"
 # define LOGIN_SIZE 8
 
-/*
-	filep: pointer to file we are reading
-	user_buf: pointer to the user space memory
-	count: number of bytes that we want to read
-	f_pos: pointer to the file position of the cursor
-*/
 static ssize_t my_misc_read(struct file *filep, char __user *user_buf, size_t count, loff_t *f_pos) {
 	const char *login = LOGIN;
     ssize_t     ret = 0;
-	/*
-        Check that count isn't larger than login size to not overflow
-        example: if 256 is sent to read as count argument since 8 < 256 copy_to_user will overflow
-    */
+
     if (count > LOGIN_SIZE){
         count = LOGIN_SIZE;
     }
-	ret = copy_to_user(user_buf, login, count);
-	return (count - ret);
+    ret = simple_read_from_buffer(user_buf, count, f_pos, login, sizeof(login));
+	return (ret);
 }
 
-/*
-	filep: pointer to file we are reading
-	user_buf: pointer to the user space memory
-	count: number of bytes that we want to write
-	f_pos: pointer to the file position of the cursor
-*/
-static ssize_t my_misc_write(struct file *filep, const char __user *user_buf, size_t count, loff_t *ppos) {
+static ssize_t my_misc_write(struct file *filep, const char __user *user_buf, size_t count, loff_t *f_pos) {
     static char buffer[LOGIN_SIZE];
     ssize_t     ret = 0;
 
     if (count != LOGIN_SIZE)
         return (-EINVAL);
 
-    ret = copy_from_user(buffer, user_buf, count);
+    ret = simple_write_to_buffer(buffer, sizeof(buffer), f_pos, user_buf, count);
 
     if (strncmp(buffer, LOGIN, LOGIN_SIZE) != 0)
         return (-EINVAL);
 
-    return (count - ret);
+    return (ret);
 }
 
 static const struct file_operations my_misc_fops = {

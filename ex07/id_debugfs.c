@@ -18,24 +18,25 @@ static ssize_t id_fop_read(struct file *filep, char __user *user_buf, size_t cou
     if (count > LOGIN_SIZE){
         count = LOGIN_SIZE;
     }
-	ret = copy_to_user(user_buf, login, count);
-	return (count - ret);
+    ret = simple_read_from_buffer(user_buf, count, f_pos, login, sizeof(login));
+	return (ret);
 }
 
-static ssize_t id_fop_write(struct file *filep, const char __user *user_buf, size_t count, loff_t *ppos) {
+static ssize_t id_fop_write(struct file *filep, const char __user *user_buf, size_t count, loff_t *f_pos) {
     static char buffer[LOGIN_SIZE];
     ssize_t     ret = 0;
 
     if (count != LOGIN_SIZE)
         return (-EINVAL);
 
-    ret = copy_from_user(buffer, user_buf, count);
+    ret = simple_write_to_buffer(buffer, sizeof(buffer), f_pos, user_buf, count);
 
     if (strncmp(buffer, LOGIN, LOGIN_SIZE) != 0)
         return (-EINVAL);
 
-    return (count - ret);
+    return (ret);
 }
+
 
 static const struct file_operations id_fops = {
     .read = id_fop_read,

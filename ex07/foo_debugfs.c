@@ -22,20 +22,20 @@ static ssize_t foo_fop_read(struct file *filep, char __user *user_buf, size_t co
 		count = PAGE_SIZE;
     	}
 	mutex_lock(&debugfs_mutex);
-	ret = copy_to_user(user_buf, page, count);
+	ret = simple_read_from_buffer(user_buf, count, f_pos, page, sizeof(page));
 	mutex_unlock(&debugfs_mutex);
-	return (count - ret);
+	return (ret);
 }
 
-static ssize_t foo_fop_write(struct file *filep, const char __user *user_buf, size_t count, loff_t *ppos) {
+static ssize_t foo_fop_write(struct file *filep, const char __user *user_buf, size_t count, loff_t *f_pos) {
 	ssize_t ret = 0;
 
 	if (count > PAGE_SIZE)
 		count = PAGE_SIZE;
 	mutex_lock(&debugfs_mutex);
-	ret = copy_from_user(page, user_buf, count);
+	ret = simple_write_to_buffer(page, sizeof(page), f_pos, user_buf, count);
 	mutex_unlock(&debugfs_mutex);
-	return (count - ret);
+	return (ret);
 }
 
 static const struct file_operations foo_fops = {
