@@ -44,7 +44,7 @@ static const struct file_operations foo_fops = {
 };
 
 int create_foo_debugfs(struct dentry *parent){
-	foo_debugfs_file = debugfs_create_file(FILE_NAME, 644, parent, NULL, &foo_fops);
+	foo_debugfs_file = debugfs_create_file(FILE_NAME, 0644, parent, NULL, &foo_fops);
 	if (!foo_debugfs_file){
 		printk(KERN_ERR "Failed to create debugfs foo file.\n");
        	return -1;

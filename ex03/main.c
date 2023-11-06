@@ -10,7 +10,7 @@ int do_work(int *my_int, int retval)
 	int y = *my_int;
 	int z;
 
-	for (x = 0; x < my_int; ++x)
+	for (x = 0; x < *my_int; ++x)
 		udelay(10);
 	if (y < 10)
 		/*
@@ -35,3 +35,5 @@ void my_exit(void)
 
 module_init(my_init);
 module_exit(my_exit);
+
+MODULE_LICENSE("GPL");

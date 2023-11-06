@@ -3,6 +3,8 @@ From: lweglarz <lweglarz@student.42.fr>
 Date: Fri, 3 Nov 2023 19:09:25 +0100
 Subject: [PATCH] modify Makefile
 
+Add -thor_kernel to EXTRAVERSION
+
 Signed-off-by: lweglarz <lweglarz@student.42.fr>
 ---
  Makefile | 2 +-

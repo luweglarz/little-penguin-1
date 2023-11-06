@@ -44,7 +44,7 @@ static const struct file_operations id_fops = {
 };
 
 int create_id_debugfs(struct dentry *parent){
-	id_debugfs_file = debugfs_create_file(FILE_NAME, 666, parent, NULL, &id_fops);
+	id_debugfs_file = debugfs_create_file(FILE_NAME, 0666, parent, NULL, &id_fops);
 	if (!id_debugfs_file){
 		printk(KERN_ERR "Failed to create debugfs id file.\n");
        	return -1;

@@ -23,7 +23,7 @@ static const struct file_operations jiffies_fops = {
 };
 
 int create_jiffies_debugfs(struct dentry *parent){
-	jiffies_debugfs_file = debugfs_create_file(FILE_NAME, 444, parent, NULL, &jiffies_fops);
+	jiffies_debugfs_file = debugfs_create_file(FILE_NAME, 0444, parent, NULL, &jiffies_fops);
 	if (!jiffies_debugfs_file){
 		printk(KERN_ERR "Failed to create debugfs jiffies file.\n");
        	return -1;
